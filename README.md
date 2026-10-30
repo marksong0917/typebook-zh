@@ -10,8 +10,11 @@ Two shelves:
   exactly like a real Chinese keyboard) and the character lights up.
 - **English Classics** — type the text letter by letter, word by word.
 
-A **voice reads each finished character or word aloud**, and a Listen button
-reads the whole text. A new book joins the shelf every week.
+A **neural AI voice reads each finished character or word aloud** — the clips
+are pre-generated locally with Piper (`tools/gen-audio.py`; Huayan for
+Chinese, Lessac for English) and ship with the site, so playback is instant,
+keeps pace with your typing, and sounds the same on every device. A Listen
+button reads the whole text. A new book joins the shelf every week.
 
 ## Included texts (16)
 
@@ -27,7 +30,7 @@ All texts are public-domain classics.
 ## Features
 
 - Two modes (Chinese pinyin / English letters) on one shelf, with tabs
-- Voice: each finished character/word spoken aloud + full-text read-aloud (Web Speech API), toggleable
+- Voice: pre-generated neural AI clips per character/word + full-text read-aloud, toggleable (browser TTS only as fallback)
 - Three hint modes: current, all (ruby pinyin for Chinese), or none (challenge)
 - Live progress, accuracy, speed (chars/min or words/min), and timer
 - Progress is saved in your browser — leave and pick up where you stopped

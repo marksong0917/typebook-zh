@@ -178,36 +178,65 @@ const store = {
 };
 const fmtTime = s => Math.floor(s/60) + ':' + String(s%60).padStart(2,'0');
 
-/* ---------- voice ---------- */
+/* ---------- voice ----------
+   Pre-generated neural AI voice clips (tools/gen-audio.py) — instant playback,
+   paced exactly to typing: each finished unit restarts the player, so a fast
+   typist never builds a backlog. Browser TTS is only a fallback for a unit
+   whose clip has not been generated yet. */
 let voiceOn = store.get('tbzh-voice', true);
-let reading = false;
-function speakUnit(u){
-  if (!voiceOn || !window.speechSynthesis) return;
+let reading = false, chainIdx = 0, chainTimer = null;
+const player = new Audio();
+player.preload = 'auto';
+function clipURL(u){
+  return cur.mode === 'zh' ? `audio/zh/${encodeURIComponent(u.disp)}.mp3`
+                           : `audio/en/${u.i}.mp3`;
+}
+function fallbackTTS(u){
+  if (!window.speechSynthesis) return;
   const ut = new SpeechSynthesisUtterance(u.disp);
   ut.lang = cur.mode === 'zh' ? 'zh-CN' : 'en-US';
-  ut.rate = cur.mode === 'zh' ? 0.8 : 0.95;
+  ut.rate = cur.mode === 'zh' ? 0.9 : 1.0;
   speechSynthesis.speak(ut);
 }
+function speakUnit(u){
+  if (!voiceOn) return;
+  stopChain();
+  player.src = clipURL(u);
+  player.currentTime = 0;
+  player.play().catch(() => fallbackTTS(u));
+}
+function stopChain(){
+  reading = false; chainIdx = 0;
+  if (chainTimer) { clearTimeout(chainTimer); chainTimer = null; }
+  updateListenBtn();
+}
 function stopReading(){
+  stopChain();
+  player.pause();
   if (window.speechSynthesis) speechSynthesis.cancel();
-  reading = false; updateListenBtn();
 }
 function updateListenBtn(){
   $('listenBtn').innerHTML = reading ? `⏹ <span>${t('stop')}</span>` : `🔊 <span>${t('listen')}</span>`;
 }
+function chainStep(){
+  if (!reading || !cur) return;
+  if (chainIdx >= cur.units.length) { stopChain(); return; }
+  const u = cur.units[chainIdx++];
+  if (u.punct) { chainTimer = setTimeout(chainStep, 280); return; } // punctuation = a breath
+  player.src = clipURL(u);
+  player.currentTime = 0;
+  player.play().catch(() => { fallbackTTS(u); chainTimer = setTimeout(chainStep, 450); });
+}
+player.addEventListener('ended', () => { if (reading) chainStep(); });
 function readAloud(){
-  if (!window.speechSynthesis || !cur) return;
+  if (!cur) return;
   if (reading) { stopReading(); return; }
-  speechSynthesis.cancel();
-  const byLine = {};
-  cur.units.forEach(u => { (byLine[u.line] = byLine[u.line] || []).push(u.disp); });
-  const text = Object.values(byLine).map(a => a.join(cur.mode === 'zh' ? '' : ' ')).join(cur.mode === 'zh' ? '' : ' ');
-  const ut = new SpeechSynthesisUtterance(text);
-  ut.lang = cur.mode === 'zh' ? 'zh-CN' : 'en-US';
-  ut.rate = cur.mode === 'zh' ? 0.85 : 1.0;
-  ut.onend = ut.onerror = () => { reading = false; updateListenBtn(); };
-  reading = true; updateListenBtn();
-  speechSynthesis.speak(ut);
+  reading = true; chainIdx = 0; updateListenBtn();
+  chainStep();
+}
+function preloadClips(){
+  if (!cur) return;
+  cur.units.slice(0, 12).forEach(u => { if (!u.punct) { const a = new Audio(); a.preload = 'auto'; a.src = clipURL(u); } });
 }
 function updateVoiceBtn(){ $('voiceBtn').textContent = voiceOn ? '🔊' : '🔇'; }
 $('voiceBtn').addEventListener('click', () => {
@@ -267,7 +296,7 @@ function openText(id){
   $('textBody').className = 'text-body' + (cur.mode === 'en' ? ' en' : '');
   $('speedLabel').textContent = cur.mode === 'zh' ? t('speed') : t('speedW');
   $('shelf').hidden = true; $('reader').hidden = false; $('doneOverlay').hidden = true;
-  renderText(); renderStats(); $('stage').focus();
+  renderText(); renderStats(); preloadClips(); $('stage').focus();
 }
 function skipPunct(){ while (idx < cur.units.length && cur.units[idx].punct) idx++; }
 function renderText(){
