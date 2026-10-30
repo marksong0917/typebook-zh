@@ -80,7 +80,11 @@ main{flex:1;width:100%;max-width:880px;margin:0 auto;padding:28px 20px 40px}
 .done-stats span{font-size:12px;color:var(--muted)}
 .done-actions{display:flex;gap:12px;justify-content:center}
 
-footer{border-top:1px solid var(--line);padding:16px 28px;text-align:center;color:var(--muted);font-size:13px}
+footer{border-top:1px solid var(--line);padding:20px 28px;text-align:center;color:var(--muted);font-size:13px}
+.foot-links{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:center;align-items:center;margin-bottom:12px}
+.foot-label{font-weight:600;color:var(--ink)}
+.foot-links a{color:var(--muted);text-decoration:none}
+.foot-links a:hover{color:var(--red);text-decoration:underline}
 
 @media (max-width:560px){
   .text-body{font-size:31px;line-height:2}

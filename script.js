@@ -64,7 +64,7 @@ const STR = {
     back:'书架', restart:'重读', progress:'进度', accuracy:'正确率', speed:'字/分钟', time:'用时',
     kbdTip:'请使用英文输入法 · 点击此处后开始打字',
     doneTitle:'读完了', again:'再读一遍', backToShelf:'回到书架',
-    credit:'灵感来自', credit2:'我们自己的中文实现，开源（MIT）',
+    credit:'灵感来自', credit2:'我们自己的中文实现，开源（MIT）', more:'更多作品',
     chars:'字', level0:'入门', level1:'进阶', start:'开始', resume:'继续', finished:'已读完' },
   en:{ title:'Type the Classics', tagline:'Read a Chinese classic by typing it',
     intro:'Pick a text and type it back to life. Type each character\u2019s pinyin and the character lights up. No tones needed; type v for ü \u2014 just like a real Chinese keyboard.',
@@ -72,7 +72,7 @@ const STR = {
     back:'Shelf', restart:'Restart', progress:'Progress', accuracy:'Accuracy', speed:'Chars/min', time:'Time',
     kbdTip:'Use an English keyboard layout \u00b7 click here, then type',
     doneTitle:'Finished', again:'Read it again', backToShelf:'Back to shelf',
-    credit:'Inspired by', credit2:'our own Chinese implementation, open source (MIT)',
+    credit:'Inspired by', credit2:'our own Chinese implementation, open source (MIT)', more:'More projects',
     chars:'chars', level0:'Easy', level1:'Harder', start:'Start', resume:'Continue', finished:'Finished' }
 };
 let lang = localStorage.getItem('tbzh-lang') || 'zh';
