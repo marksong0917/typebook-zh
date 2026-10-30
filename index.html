@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>打字读经典 — 一边打字，一边读完一本经典 | Type the Classics</title>
 <meta name="description" content="用拼音把经典一个字一个字敲出来：静夜思、三字经、论语、道德经。读完一篇，只需要你的键盘。Type Chinese classics character by character, pinyin by pinyin.">
-<link rel="stylesheet" href="style.css?v=2">
+<link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
 <header class="topbar">
@@ -24,6 +24,7 @@
         <option value="none" data-i18n="hintNone">无（挑战）</option>
       </select>
     </label>
+    <button id="voiceBtn" class="ghost-btn" type="button" title="Voice">🔊</button>
     <button id="langBtn" class="ghost-btn" type="button">EN</button>
   </div>
 </header>
@@ -32,6 +33,11 @@
   <!-- Shelf -->
   <section id="shelf">
     <p class="intro" data-i18n="intro">选一篇，用键盘把它读完。每个字敲出它的拼音，字就会亮起来。不用声调，ü 打 v —— 和你平时打字一样。</p>
+    <div class="mode-tabs">
+      <button id="tabZh" class="mode-tab active" type="button">中文经典</button>
+      <button id="tabEn" class="mode-tab" type="button">English Classics</button>
+    </div>
+    <p class="weekly-note" data-i18n="weekly">书架每周上新一篇</p>
     <div id="shelfGrid" class="shelf-grid"></div>
   </section>
 
@@ -43,13 +49,16 @@
         <h2 id="rTitle"></h2>
         <p id="rMeta"></p>
       </div>
-      <button id="restartBtn" class="ghost-btn" type="button" data-i18n="restart">重读</button>
+      <div class="reader-actions">
+        <button id="listenBtn" class="ghost-btn" type="button">🔊 <span data-i18n="listen">朗读</span></button>
+        <button id="restartBtn" class="ghost-btn" type="button" data-i18n="restart">重读</button>
+      </div>
     </div>
 
     <div class="stats">
       <div class="stat"><span class="stat-num" id="stProgress">0%</span><span class="stat-label" data-i18n="progress">进度</span></div>
       <div class="stat"><span class="stat-num" id="stAcc">100%</span><span class="stat-label" data-i18n="accuracy">正确率</span></div>
-      <div class="stat"><span class="stat-num" id="stSpeed">0</span><span class="stat-label" data-i18n="speed">字/分钟</span></div>
+      <div class="stat"><span class="stat-num" id="stSpeed">0</span><span class="stat-label" id="speedLabel" data-i18n="speed">字/分钟</span></div>
       <div class="stat"><span class="stat-num" id="stTime">0:00</span><span class="stat-label" data-i18n="time">用时</span></div>
     </div>
     <div class="progress-track"><div id="progressBar"></div></div>
@@ -97,6 +106,6 @@
   <p><span data-i18n="credit">灵感来自</span> <a href="https://typebook.lol" target="_blank" rel="noopener">Typebook</a> · <span data-i18n="credit2">我们自己的中文实现，开源（MIT）</span> · <a href="https://github.com/marksong0917/typebook-zh" target="_blank" rel="noopener">GitHub</a></p>
 </footer>
 
-<script src="script.js?v=2"></script>
+<script src="script.js?v=3"></script>
 </body>
 </html>

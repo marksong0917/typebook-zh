@@ -80,6 +80,16 @@ main{flex:1;width:100%;max-width:880px;margin:0 auto;padding:28px 20px 40px}
 .done-stats span{font-size:12px;color:var(--muted)}
 .done-actions{display:flex;gap:12px;justify-content:center}
 
+.mode-tabs{display:flex;gap:10px;margin:0 0 6px}
+.mode-tab{border:1px solid var(--line);background:var(--card);border-radius:24px;padding:9px 22px;font-size:15px;font-family:"Noto Serif SC","Songti SC",serif;letter-spacing:1px;color:var(--muted)}
+.mode-tab.active{background:var(--red);border-color:var(--red);color:#fff}
+.weekly-note{color:var(--muted);font-size:12px;margin:0 0 18px}
+.reader-actions{display:flex;gap:8px}
+.text-body.en{font-family:Georgia,"Times New Roman",serif;font-size:29px;letter-spacing:0;line-height:2;text-align:left}
+.text-body.en .unit{margin-right:.26em}
+.text-body.en .unit.punct{margin-right:.26em}
+.book .first-line.en{font-family:Georgia,serif;letter-spacing:0}
+
 footer{border-top:1px solid var(--line);padding:20px 28px;text-align:center;color:var(--muted);font-size:13px}
 .foot-links{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:center;align-items:center;margin-bottom:12px}
 .foot-label{font-weight:600;color:var(--ink)}

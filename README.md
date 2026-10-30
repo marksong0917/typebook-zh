@@ -1,24 +1,35 @@
 # 打字读经典 · Type the Classics
 
-Read a Chinese classic by typing it — one character, one pinyin at a time.
+Read a classic by typing it — Chinese classics by pinyin, English classics
+letter by letter.
 
 **Live demo:** https://marksong0917.github.io/typebook-zh/
 
-Type each character's pinyin (no tones; type `v` for ü — exactly like a real
-Chinese keyboard) and the character lights up. Finish the text and you have,
-quite literally, typed your way through it.
+Two shelves:
+- **中文经典** — type each character's pinyin (no tones; type `v` for ü —
+  exactly like a real Chinese keyboard) and the character lights up.
+- **English Classics** — type the text letter by letter, word by word.
 
-## Included texts
+A **voice reads each finished character or word aloud**, and a Listen button
+reads the whole text. A new book joins the shelf every week.
 
-- 静夜思 · 春晓 · 登鹳雀楼 · 悯农 — 李白、孟浩然、王之涣、李绅 (Tang poems, easy)
-- 三字经（节选） · 论语 · 学而（节选） · 道德经 · 第一章（节选） — harder
+## Included texts (16)
 
-All texts are public-domain classics, two thousand years past copyright.
+Chinese: 静夜思 · 春晓 · 登鹳雀楼 · 悯农 · 咏鹅 · 登幽州台歌 ·
+三字经（节选） · 论语 · 学而（节选） · 道德经 · 第一章 · 大学（节选） · 孟子（节选）
+
+English: Shakespeare — Sonnet 18 · Frost — The Road Not Taken ·
+Dickinson — Hope Is the Thing with Feathers · Lincoln — The Gettysburg
+Address (opening) · Blake — The Tyger
+
+All texts are public-domain classics.
 
 ## Features
 
-- Three hint modes: current character, all characters (ruby pinyin), or none (challenge)
-- Live progress, accuracy, characters-per-minute, and timer
+- Two modes (Chinese pinyin / English letters) on one shelf, with tabs
+- Voice: each finished character/word spoken aloud + full-text read-aloud (Web Speech API), toggleable
+- Three hint modes: current, all (ruby pinyin for Chinese), or none (challenge)
+- Live progress, accuracy, speed (chars/min or words/min), and timer
 - Progress is saved in your browser — leave and pick up where you stopped
 - Bilingual UI （中文 / English), works on mobile (use an English keyboard layout)
 - No backend, no accounts, no tracking. One static page.
