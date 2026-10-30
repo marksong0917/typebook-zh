@@ -79,6 +79,13 @@ const TEXTS = [
       '鱼|yú ，| 我|wǒ 所|suǒ 欲|yù 也|yě ；| 熊|xióng 掌|zhǎng ，| 亦|yì 我|wǒ 所|suǒ 欲|yù 也|yě 。|',
       '二|èr 者|zhě 不|bù 可|kě 得|dé 兼|jiān ，| 舍|shě 鱼|yú 而|ér 取|qǔ 熊|xióng 掌|zhǎng 者|zhě 也|yě 。|'
     ]},
+  { id:'xiangsi', mode:'zh', title:'相思', author:'王维', dynasty:'唐', level:0,
+    lines:[
+      '红|hóng 豆|dòu 生|shēng 南|nán 国|guó ，|',
+      '春|chūn 来|lái 发|fā 几|jǐ 枝|zhī 。|',
+      '愿|yuàn 君|jūn 多|duō 采|cǎi 撷|xié ，|',
+      '此|cǐ 物|wù 最|zuì 相|xiāng 思|sī 。|'
+    ]},
 
   /* ===== English Classics ===== */
   { id:'en-sonnet18', mode:'en', title:'Sonnet 18', author:'William Shakespeare', dynasty:'1609', level:0,

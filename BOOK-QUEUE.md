@@ -6,14 +6,13 @@ per character; English entries need the canonical text, opening excerpt only
 (4–6 lines / ~40 words max, same size as the launch books).
 
 ## Queue — Chinese
-1. 《相思》王维 （五言绝句）
-2. 《江雪》柳宗元
-3. 《悯农 · 其一》李绅 （春种一粒粟）
-4. 《弟子规》节选 （父母呼，应勿缓）
-5. 《千字文》节选 （天地玄黄，宇宙洪荒）
-6. 《朱子家训》节选 （黎明即起）
-7. 《陋室铭》刘禹锡 （节选）
-8. 《爱莲说》周敦颐 （节选）
+1. 《江雪》柳宗元
+2. 《悯农 · 其一》李绅 （春种一粒粟）
+3. 《弟子规》节选 （父母呼，应勿缓）
+4. 《千字文》节选 （天地玄黄，宇宙洪荒）
+5. 《朱子家训》节选 （黎明即起）
+6. 《陋室铭》刘禹锡 （节选）
+7. 《爱莲说》周敦颐 （节选）
 
 ## Queue — English
 1. "A Psalm of Life" (opening) — Henry Wadsworth Longfellow
@@ -25,3 +24,4 @@ per character; English entries need the canonical text, opening excerpt only
 
 ## Done
 - 2026-10-30 launch: 11 Chinese + 5 English (see script.js TEXTS)
+- 2026-10-30: 《相思》王维
