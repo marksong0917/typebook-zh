@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>打字读经典 — 一边打字，一边读完一本经典 | Type the Classics</title>
+<meta name="description" content="用拼音把经典一个字一个字敲出来：静夜思、三字经、论语、道德经。读完一篇，只需要你的键盘。Type Chinese classics character by character, pinyin by pinyin.">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="seal">读</span>
+    <div>
+      <h1 data-i18n="title">打字读经典</h1>
+      <p data-i18n="tagline">一边打字，一边读完一篇经典</p>
+    </div>
+  </div>
+  <div class="top-actions">
+    <label class="hint-label"><span data-i18n="hint">拼音提示</span>
+      <select id="hintMode">
+        <option value="current" data-i18n="hintCurrent">当前字</option>
+        <option value="all" data-i18n="hintAll">全部</option>
+        <option value="none" data-i18n="hintNone">无（挑战）</option>
+      </select>
+    </label>
+    <button id="langBtn" class="ghost-btn" type="button">EN</button>
+  </div>
+</header>
+
+<main>
+  <!-- Shelf -->
+  <section id="shelf">
+    <p class="intro" data-i18n="intro">选一篇，用键盘把它读完。每个字敲出它的拼音，字就会亮起来。不用声调，ü 打 v —— 和你平时打字一样。</p>
+    <div id="shelfGrid" class="shelf-grid"></div>
+  </section>
+
+  <!-- Reader -->
+  <section id="reader" hidden>
+    <div class="reader-head">
+      <button id="backBtn" class="ghost-btn" type="button">← <span data-i18n="back">书架</span></button>
+      <div class="reader-title">
+        <h2 id="rTitle"></h2>
+        <p id="rMeta"></p>
+      </div>
+      <button id="restartBtn" class="ghost-btn" type="button" data-i18n="restart">重读</button>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><span class="stat-num" id="stProgress">0%</span><span class="stat-label" data-i18n="progress">进度</span></div>
+      <div class="stat"><span class="stat-num" id="stAcc">100%</span><span class="stat-label" data-i18n="accuracy">正确率</span></div>
+      <div class="stat"><span class="stat-num" id="stSpeed">0</span><span class="stat-label" data-i18n="speed">字/分钟</span></div>
+      <div class="stat"><span class="stat-num" id="stTime">0:00</span><span class="stat-label" data-i18n="time">用时</span></div>
+    </div>
+    <div class="progress-track"><div id="progressBar"></div></div>
+
+    <div id="stage" tabindex="0" aria-label="typing area">
+      <div id="currentHint" class="current-hint"></div>
+      <div id="textBody" class="text-body"></div>
+      <p class="kbd-tip" data-i18n="kbdTip">请使用英文输入法 · 点击此处后开始打字</p>
+      <input id="mobileInput" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" aria-hidden="true">
+    </div>
+
+    <p id="textNote" class="text-note"></p>
+  </section>
+
+  <!-- Done overlay -->
+  <div id="doneOverlay" class="overlay" hidden>
+    <div class="overlay-card">
+      <span class="seal big">完</span>
+      <h2 data-i18n="doneTitle">读完了</h2>
+      <p id="doneTextName" class="done-name"></p>
+      <div class="done-stats">
+        <div><strong id="dTime">0:00</strong><span data-i18n="time">用时</span></div>
+        <div><strong id="dAcc">100%</strong><span data-i18n="accuracy">正确率</span></div>
+        <div><strong id="dSpeed">0</strong><span data-i18n="speed">字/分钟</span></div>
+      </div>
+      <div class="done-actions">
+        <button id="againBtn" class="primary-btn" type="button" data-i18n="again">再读一遍</button>
+        <button id="shelfBtn" class="ghost-btn" type="button" data-i18n="backToShelf">回到书架</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p><span data-i18n="credit">灵感来自</span> <a href="https://typebook.lol" target="_blank" rel="noopener">Typebook</a> · <span data-i18n="credit2">我们自己的中文实现，开源（MIT）</span> · <a href="https://github.com/marksong0917/typebook-zh" target="_blank" rel="noopener">GitHub</a></p>
+</footer>
+
+<script src="script.js?v=1"></script>
+</body>
+</html>

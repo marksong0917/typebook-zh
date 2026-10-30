@@ -1,0 +1,90 @@
+:root{
+  --paper:#faf7f0; --card:#fffdf8; --ink:#2b2620; --muted:#8a7f6d;
+  --red:#b03a2e; --red-soft:#f6e3df; --line:#e6ddcd; --gold:#c8963e;
+  --done:#3e7d4e;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column}
+a{color:var(--red)}
+button{font-family:inherit;cursor:pointer}
+
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 28px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:14px}
+.seal{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;background:var(--red);color:#fff;font-family:"Noto Serif SC","Songti SC",serif;font-size:26px;font-weight:700;border-radius:8px;box-shadow:0 2px 8px rgba(176,58,46,.3)}
+.seal.big{width:64px;height:64px;font-size:36px}
+.brand h1{margin:0;font-family:"Noto Serif SC","Songti SC",serif;font-size:26px;letter-spacing:2px}
+.brand p{margin:2px 0 0;color:var(--muted);font-size:13px}
+.top-actions{display:flex;align-items:center;gap:12px}
+.hint-label{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px}
+select{padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);font-size:13px}
+.ghost-btn{background:transparent;border:1px solid var(--line);border-radius:8px;padding:7px 14px;font-size:14px;color:var(--ink)}
+.ghost-btn:hover{border-color:var(--red);color:var(--red)}
+.primary-btn{background:var(--red);color:#fff;border:0;border-radius:8px;padding:10px 22px;font-size:15px}
+.primary-btn:hover{background:#933025}
+
+main{flex:1;width:100%;max-width:880px;margin:0 auto;padding:28px 20px 40px}
+.intro{color:var(--muted);font-size:15px;line-height:1.7;margin:0 0 22px}
+
+.shelf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.book{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;text-align:left;width:100%;transition:border-color .15s,transform .15s}
+.book:hover{border-color:var(--red);transform:translateY(-2px)}
+.book h3{margin:0 0 4px;font-family:"Noto Serif SC","Songti SC",serif;font-size:21px;letter-spacing:1px}
+.book .author{color:var(--muted);font-size:13px;margin:0 0 10px}
+.book .first-line{font-family:"Noto Serif SC","Songti SC",serif;font-size:15px;color:#57503f;margin:0 0 14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.book .meta-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)}
+.level{border:1px solid var(--gold);color:var(--gold);border-radius:20px;padding:2px 10px;font-size:12px}
+.book .bar{height:5px;background:var(--line);border-radius:3px;margin-top:12px;overflow:hidden}
+.book .bar i{display:block;height:100%;background:var(--done)}
+.book .done-tag{color:var(--done);font-weight:600}
+
+.reader-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
+.reader-title{text-align:center}
+.reader-title h2{margin:0;font-family:"Noto Serif SC","Songti SC",serif;font-size:28px;letter-spacing:3px}
+.reader-title p{margin:4px 0 0;color:var(--muted);font-size:13px}
+
+.stats{display:flex;gap:10px;justify-content:center;margin-bottom:10px;flex-wrap:wrap}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 18px;text-align:center;min-width:92px}
+.stat-num{display:block;font-size:19px;font-weight:700}
+.stat-label{font-size:11px;color:var(--muted)}
+.progress-track{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px}
+#progressBar{height:100%;width:0;background:var(--red);transition:width .2s}
+
+#stage{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:30px 28px 20px;position:relative;outline:none}
+#stage:focus{border-color:var(--gold)}
+.current-hint{min-height:44px;text-align:center;font-size:30px;letter-spacing:3px;color:var(--red);font-weight:600}
+.current-hint .typed{color:var(--done)}
+.current-hint .rest{color:#d8c9b8}
+.current-hint.error{animation:shake .25s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.text-body{font-family:"Noto Serif SC","Songti SC","Songti SC",serif;font-size:40px;line-height:2.1;letter-spacing:2px;text-align:center}
+.text-body .line{display:block}
+.unit{position:relative;color:#cfc4ae;transition:color .15s}
+.unit ruby rt{font-size:12px;color:var(--muted);letter-spacing:0;font-family:"PingFang SC",sans-serif}
+.unit.done{color:var(--ink)}
+.unit.current{color:var(--gold)}
+.unit.current::after{content:"";position:absolute;left:8%;right:8%;bottom:-4px;height:3px;background:var(--red);border-radius:2px}
+.unit.punct{color:#d8cdb4}
+.unit.punct.done{color:#9a8f78}
+.kbd-tip{text-align:center;color:var(--muted);font-size:12px;margin:18px 0 4px}
+#mobileInput{position:absolute;opacity:0;pointer-events:none;height:1px;width:1px;bottom:0;left:0}
+.text-note{color:var(--muted);font-size:13px;text-align:center;margin-top:14px}
+
+.overlay{position:fixed;inset:0;background:rgba(43,38,32,.55);display:flex;align-items:center;justify-content:center;padding:20px;z-index:10}
+.overlay[hidden]{display:none}
+.overlay-card{background:var(--card);border-radius:16px;padding:36px 40px;text-align:center;max-width:420px;width:100%}
+.overlay-card h2{font-family:"Noto Serif SC","Songti SC",serif;letter-spacing:4px;margin:16px 0 4px}
+.done-name{color:var(--muted);margin:0 0 20px}
+.done-stats{display:flex;justify-content:center;gap:28px;margin-bottom:24px}
+.done-stats strong{display:block;font-size:24px}
+.done-stats span{font-size:12px;color:var(--muted)}
+.done-actions{display:flex;gap:12px;justify-content:center}
+
+footer{border-top:1px solid var(--line);padding:16px 28px;text-align:center;color:var(--muted);font-size:13px}
+
+@media (max-width:560px){
+  .text-body{font-size:31px;line-height:2}
+  .current-hint{font-size:24px}
+  main{padding:20px 14px 32px}
+  #stage{padding:22px 14px 14px}
+}
