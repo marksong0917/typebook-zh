@@ -198,12 +198,21 @@ function fallbackTTS(u){
   ut.rate = cur.mode === 'zh' ? 0.9 : 1.0;
   speechSynthesis.speak(ut);
 }
+let lastUnit = null;
+player.addEventListener('error', () => {
+  if (!voiceOn || !lastUnit) return;
+  fallbackTTS(lastUnit);           // clip genuinely missing/failed -> browser voice
+  if (reading) chainTimer = setTimeout(chainStep, 350);
+  lastUnit = null;
+});
 function speakUnit(u){
   if (!voiceOn) return;
   stopChain();
+  lastUnit = u;
   player.src = clipURL(u);
   player.currentTime = 0;
-  player.play().catch(() => fallbackTTS(u));
+  const p = player.play();
+  if (p) p.catch(() => {});        // AbortError = a faster keystroke took over; stay silent
 }
 function stopChain(){
   reading = false; chainIdx = 0;
@@ -223,9 +232,11 @@ function chainStep(){
   if (chainIdx >= cur.units.length) { stopChain(); return; }
   const u = cur.units[chainIdx++];
   if (u.punct) { chainTimer = setTimeout(chainStep, 280); return; } // punctuation = a breath
+  lastUnit = u;
   player.src = clipURL(u);
   player.currentTime = 0;
-  player.play().catch(() => { fallbackTTS(u); chainTimer = setTimeout(chainStep, 450); });
+  const p = player.play();
+  if (p) p.catch(() => {});        // real failures surface via the player error event
 }
 player.addEventListener('ended', () => { if (reading) chainStep(); });
 function readAloud(){
@@ -296,7 +307,7 @@ function openText(id){
   $('textBody').className = 'text-body' + (cur.mode === 'en' ? ' en' : '');
   $('speedLabel').textContent = cur.mode === 'zh' ? t('speed') : t('speedW');
   $('shelf').hidden = true; $('reader').hidden = false; $('doneOverlay').hidden = true;
-  renderText(); renderStats(); preloadClips(); $('stage').focus();
+  renderText(); renderStats(); preloadClips(); $('stage').classList.add('fresh'); $('stage').focus();
 }
 function skipPunct(){ while (idx < cur.units.length && cur.units[idx].punct) idx++; }
 function renderText(){
@@ -359,7 +370,7 @@ function handleLetter(ch){
   if (!cur || finished || $('reader').hidden) return;
   if (idx >= cur.units.length) return;
   const u = cur.units[idx];
-  if (!startT) { startT = Date.now(); timer = setInterval(renderStats, 500); }
+  if (!startT) { startT = Date.now(); timer = setInterval(renderStats, 500); $('stage').classList.remove('fresh'); }
   allLetters++;
   if (ch === u.i[li2]) {
     okLetters++; li2++;

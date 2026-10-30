@@ -52,6 +52,8 @@ main{flex:1;width:100%;max-width:880px;margin:0 auto;padding:28px 20px 40px}
 
 #stage{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:30px 28px 20px;position:relative;outline:none}
 #stage:focus{border-color:var(--gold)}
+#stage.fresh{animation:pulse-border 1.6s ease-in-out infinite}
+@keyframes pulse-border{0%,100%{border-color:var(--line)}50%{border-color:var(--red)}}
 .current-hint{min-height:44px;text-align:center;font-size:30px;letter-spacing:3px;color:var(--red);font-weight:600}
 .current-hint .typed{color:var(--done)}
 .current-hint .rest{color:#d8c9b8}

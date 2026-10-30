@@ -65,6 +65,7 @@ def synth_mp3(voice, text, out):
         for c in chunks:
             wf.writeframes(c.audio_int16_bytes)
     subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(tmp),
+                    "-af", "silenceremove=start_periods=1:start_silence=0.03:start_threshold=-50dB",
                     "-codec:a", "libmp3lame", "-b:a", "32k", "-ac", "1", str(out)],
                    check=True)
     tmp.unlink(missing_ok=True)
