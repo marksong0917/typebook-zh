@@ -179,14 +179,19 @@ const store = {
 const fmtTime = s => Math.floor(s/60) + ':' + String(s%60).padStart(2,'0');
 
 /* ---------- voice ----------
-   Pre-generated neural AI voice clips (tools/gen-audio.py) — instant playback,
-   paced exactly to typing: each finished unit restarts the player, so a fast
-   typist never builds a backlog. Browser TTS is only a fallback for a unit
-   whose clip has not been generated yet. */
+   Pre-generated neural AI voice clips (tools/gen-audio.py) — one consistent
+   voice on every device. Playback runs through a small queue: every clip
+   plays to the end before the next one starts, so fast typing never cuts a
+   syllable off, and an interrupted load can no longer fire the player
+   error event that used to drop in the browser TTS voice mid-word.
+   Which clips exist is checked once per book (HEAD requests); browser TTS
+   is used only for a unit whose clip is genuinely missing. */
 let voiceOn = store.get('tbzh-voice', true);
-let reading = false, chainIdx = 0, chainTimer = null;
+let reading = false;
 const player = new Audio();
 player.preload = 'auto';
+const missingClips = new Set();
+const checkedBooks = new Set();
 function clipURL(u){
   return cur.mode === 'zh' ? `audio/zh/${encodeURIComponent(u.disp)}.mp3`
                            : `audio/en/${u.i}.mp3`;
@@ -198,55 +203,82 @@ function fallbackTTS(u){
   ut.rate = cur.mode === 'zh' ? 0.9 : 1.0;
   speechSynthesis.speak(ut);
 }
-let lastUnit = null;
-player.addEventListener('error', () => {
-  if (!voiceOn || !lastUnit) return;
-  fallbackTTS(lastUnit);           // clip genuinely missing/failed -> browser voice
-  if (reading) chainTimer = setTimeout(chainStep, 350);
-  lastUnit = null;
-});
-function speakUnit(u){
-  if (!voiceOn) return;
-  stopChain();
-  lastUnit = u;
-  player.src = clipURL(u);
+const speakQ = [];               // units waiting to be spoken, plus {pause} breaths
+let playing = false, pauseTimer = null;
+function enqueueSpeak(item, trim = true){
+  if (trim && !item.pause) {     // typing: bound the backlog, at most 3 units waiting
+    const pending = speakQ.filter(q => !q.pause);
+    if (pending.length >= 3) speakQ.splice(speakQ.indexOf(pending[0]), 1);
+  }
+  speakQ.push(item);
+  pumpQueue();
+}
+function pumpQueue(){
+  if (playing || pauseTimer) return;
+  const item = speakQ.shift();
+  if (!item) {
+    if (reading) { reading = false; updateListenBtn(); }
+    return;
+  }
+  if (item.pause) {
+    pauseTimer = setTimeout(() => { pauseTimer = null; pumpQueue(); }, item.pause);
+    return;
+  }
+  if (missingClips.has(clipURL(item))) { fallbackTTS(item); pumpQueue(); return; }
+  playing = true;
+  player.src = clipURL(item);
   player.currentTime = 0;
   const p = player.play();
-  if (p) p.catch(() => {});        // AbortError = a faster keystroke took over; stay silent
+  if (p) p.catch(() => { playing = false; pumpQueue(); });
+}
+player.addEventListener('ended', () => { playing = false; pumpQueue(); });
+player.addEventListener('error', () => {
+  if (playing) { playing = false; pumpQueue(); }  // skip a broken clip; never TTS over the queue
+});
+function stopPlayback(){
+  speakQ.length = 0;
+  if (pauseTimer) { clearTimeout(pauseTimer); pauseTimer = null; }
+  playing = false;
+  player.pause();
+  if (window.speechSynthesis) speechSynthesis.cancel();
+}
+function speakUnit(u){
+  if (!voiceOn) return;
+  if (reading) stopReading();
+  enqueueSpeak(u);
 }
 function stopChain(){
-  reading = false; chainIdx = 0;
-  if (chainTimer) { clearTimeout(chainTimer); chainTimer = null; }
+  reading = false;
   updateListenBtn();
 }
 function stopReading(){
   stopChain();
-  player.pause();
-  if (window.speechSynthesis) speechSynthesis.cancel();
+  stopPlayback();
 }
 function updateListenBtn(){
   $('listenBtn').innerHTML = reading ? `⏹ <span>${t('stop')}</span>` : `🔊 <span>${t('listen')}</span>`;
 }
-function chainStep(){
-  if (!reading || !cur) return;
-  if (chainIdx >= cur.units.length) { stopChain(); return; }
-  const u = cur.units[chainIdx++];
-  if (u.punct) { chainTimer = setTimeout(chainStep, 280); return; } // punctuation = a breath
-  lastUnit = u;
-  player.src = clipURL(u);
-  player.currentTime = 0;
-  const p = player.play();
-  if (p) p.catch(() => {});        // real failures surface via the player error event
-}
-player.addEventListener('ended', () => { if (reading) chainStep(); });
 function readAloud(){
   if (!cur) return;
   if (reading) { stopReading(); return; }
-  reading = true; chainIdx = 0; updateListenBtn();
-  chainStep();
+  stopPlayback();
+  reading = true; updateListenBtn();
+  cur.units.forEach(u => enqueueSpeak(u.punct ? { pause: 280 } : u, false)); // punctuation = a breath; read-aloud never trims
+  pumpQueue();
+}
+function checkClips(){
+  if (!cur || checkedBooks.has(cur.id)) return;
+  checkedBooks.add(cur.id);
+  const urls = [...new Set(cur.units.filter(u => !u.punct).map(clipURL))];
+  urls.forEach(url => {
+    fetch(url, { method: 'HEAD' })
+      .then(r => { if (!r.ok) missingClips.add(url); })
+      .catch(() => {});
+  });
 }
 function preloadClips(){
   if (!cur) return;
+  checkClips();
   cur.units.slice(0, 12).forEach(u => { if (!u.punct) { const a = new Audio(); a.preload = 'auto'; a.src = clipURL(u); } });
 }
 function updateVoiceBtn(){ $('voiceBtn').textContent = voiceOn ? '🔊' : '🔇'; }

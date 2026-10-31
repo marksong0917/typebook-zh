@@ -37,6 +37,18 @@ def extract_texts():
         capture_output=True, text=True, check=True)
     return json.loads(js.stdout)
 
+# Piper's zh phoneme table gives a few characters a reading that is wrong
+# for every occurrence in this library (verified 2026-10-31 by phoneme audit
+# + pitch analysis of the shipped clips). The clip is audio only, so we
+# synthesize an unambiguous homophone with the correct reading instead:
+#   说 -> 悦  Piper says shuo1; in 《论语》 说乎 the reading is yue4.
+#             (If a future book uses 说 as shuo1, that book needs a
+#             per-book reading clip — do not just drop this row.)
+#   地 -> 弟  Piper reads neutral "de"; the texts need full di4 （天地/地上）.
+#   得 -> 德  Piper reads neutral "de"; 《孟子》 不可得兼 needs de2.
+#   乎 -> 呼  Piper reads a short neutral hu (0.23 s); classical 乎 is hu1.
+ZH_SUBSTITUTE = {"说": "悦", "地": "弟", "得": "德", "乎": "呼"}
+
 def collect(texts):
     zh, en = {}, {}
     for tx in texts:
@@ -45,7 +57,7 @@ def collect(texts):
                 for tok in line.split(" "):
                     ch, _, p = tok.partition("|")
                     if p:
-                        zh[ch] = ch
+                        zh[ch] = ZH_SUBSTITUTE.get(ch, ch)
             else:
                 for w in line.split(" "):
                     key = re.sub(r"[^a-z]", "", w.lower())
