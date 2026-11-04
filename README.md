@@ -16,14 +16,14 @@ Chinese, Lessac for English) and ship with the site, so playback is instant,
 keeps pace with your typing, and sounds the same on every device. A Listen
 button reads the whole text. A new book joins the shelf every week.
 
-## Included texts (16)
+## Included texts (18)
 
 Chinese: 静夜思 · 春晓 · 登鹳雀楼 · 悯农 · 咏鹅 · 登幽州台歌 ·
-三字经（节选） · 论语 · 学而（节选） · 道德经 · 第一章 · 大学（节选） · 孟子（节选）
+三字经（节选） · 论语 · 学而（节选） · 道德经 · 第一章 · 大学（节选） · 孟子（节选） · 相思
 
 English: Shakespeare — Sonnet 18 · Frost — The Road Not Taken ·
 Dickinson — Hope Is the Thing with Feathers · Lincoln — The Gettysburg
-Address (opening) · Blake — The Tyger
+Address (opening) · Blake — The Tyger · Longfellow — A Psalm of Life
 
 All texts are public-domain classics.
 
