@@ -15,13 +15,13 @@ per character; English entries need the canonical text, opening excerpt only
 7. 《爱莲说》周敦颐 （节选）
 
 ## Queue — English
-1. "A Psalm of Life" (opening) — Henry Wadsworth Longfellow
-2. "Invictus" (first stanza) — William Ernest Henley
-3. "If—" (opening) — Rudyard Kipling (d. 1936; public domain in Canada, life+50 — verify before use)
-4. Sonnet 29 opening — William Shakespeare
-5. "Ozymandias" (first 6 lines) — Percy Bysshe Shelley
-6. "The New Colossus" (opening) — Emma Lazarus
+1. "Invictus" (first stanza) — William Ernest Henley
+2. "If—" (opening) — Rudyard Kipling (d. 1936; public domain in Canada, life+50 — verify before use)
+3. Sonnet 29 opening — William Shakespeare
+4. "Ozymandias" (first 6 lines) — Percy Bysshe Shelley
+5. "The New Colossus" (opening) — Emma Lazarus
 
 ## Done
 - 2026-10-30 launch: 11 Chinese + 5 English (see script.js TEXTS)
 - 2026-10-30: 《相思》王维
+- 2026-11-04: "A Psalm of Life" — Henry Wadsworth Longfellow

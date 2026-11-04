@@ -123,6 +123,15 @@ const TEXTS = [
       "In the forests of the night;",
       "What immortal hand or eye,",
       "Could frame thy fearful symmetry?"
+    ]},
+  { id:'en-psalm', mode:'en', title:'A Psalm of Life', author:'Henry Wadsworth Longfellow', dynasty:'1838', level:1,
+    lines:[
+      "Tell me not, in mournful numbers,",
+      "Life is but an empty dream!",
+      "For the soul is dead that slumbers,",
+      "And things are not what they seem.",
+      "Life is real! Life is earnest!",
+      "And the grave is not its goal;"
     ]}
 ];
 
